@@ -1,0 +1,26 @@
+from collections import deque
+
+graph = {}
+
+edges = int(input("Number of edges: "))
+
+for _ in range(edges):
+    u, v = input("Enter connections: ").split()
+    graph.setdefault(u, []).append(v)
+    graph.setdefault(v, []).append(u)
+
+start = input("Start node: ")
+
+queue = [start]
+visited = [start]
+
+print("BFS path:")
+
+while queue:
+    current = queue.pop(0)
+    print(current, end=" ")
+
+    for neighbour in graph.get(current, []):
+        if neighbour not in visited:
+            visited.append(neighbour)
+            queue.append(neighbour)
