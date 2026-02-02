@@ -1,0 +1,44 @@
+# Step 11: check for tie if all the 9 turns are completed
+# Step 12: stop
+
+board = [" "] * 9
+player = "X"
+
+for turn in range(9):
+    print(f"{board[0]} | {board[1]} | {board[2]}")
+    print("--+---+--")
+    print(f"{board[3]} | {board[4]} | {board[5]}")
+    print("--+---+--")
+    print(f"{board[6]} | {board[7]} | {board[8]}")
+
+    move = input(f"Player {player}, choose a position: ")
+
+    if not move.isdigit() or int(move) < 1 or int(move) > 9:
+        print("Invalid input, choose other position")
+        continue
+
+    move = int(move) - 1
+
+    if board[move] != " ":
+        print("Spot taken! Try again")
+        continue
+
+    board[move] = player
+
+    # Win conditions
+    if (
+        board[0] == board[1] == board[2] == player or
+        board[3] == board[4] == board[5] == player or
+        board[6] == board[7] == board[8] == player or
+        board[0] == board[3] == board[6] == player or
+        board[1] == board[4] == board[7] == player or
+        board[2] == board[5] == board[8] == player or
+        board[0] == board[4] == board[8] == player or
+        board[2] == board[4] == board[6] == player
+    ):
+        print(f"\nPlayer {player} wins!")
+        break
+
+    player = "O" if player == "X" else "X"
+else:
+    print("It's a tie!")
