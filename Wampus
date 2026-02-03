@@ -1,0 +1,42 @@
+# -------- WUMPUS WORLD : 3x3 PERCEPTION --------
+
+# 3x3 world
+# P = Pit, W = Wumpus, . = Empty
+world = [
+    ['.', 'P', '.'],
+    ['.', '.', '.'],
+    ['.', 'W', '.']
+]
+
+# Take agent position dynamically
+x = int(input("Enter agent row (0 to 2): "))
+y = int(input("Enter agent column (0 to 2): "))
+
+def perceive(x, y):
+    breeze = False
+    stench = False
+
+    # Directions: up, down, left, right
+    directions = [(-1,0), (1,0), (0,-1), (0,1)]
+
+    for dx, dy in directions:
+        nx = x + dx
+        ny = y + dy
+
+        # Check boundaries
+        if 0 <= nx < 3 and 0 <= ny < 3:
+            if world[nx][ny] == 'P':
+                breeze = True
+            if world[nx][ny] == 'W':
+                stench = True
+
+    print("\nAgent at position:", (x, y))
+    if breeze:
+        print("Breeze perceived 💨")
+    if stench:
+        print("Stench perceived 🤢")
+    if not breeze and not stench:
+        print("No danger sensed")
+
+# -------- MAIN --------
+perceive(x, y)
