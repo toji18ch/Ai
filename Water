@@ -1,0 +1,45 @@
+from collections import deque
+
+def water_jug():
+    # Take inputs dynamically
+    jug1 = int(input("Enter capacity of Jug 1: "))
+    jug2 = int(input("Enter capacity of Jug 2: "))
+    goal = int(input("Enter goal amount: "))
+
+    # Initial state
+    start = (0, 0)
+
+    queue = deque([start])
+    visited = set([start])
+
+    while queue:
+        x, y = queue.popleft()
+
+        # Check goal condition
+        if x == goal or y == goal:
+            print("Goal reached at state:", (x, y))
+            return
+
+        # Possible next states
+        states = [
+            (jug1, y),              # Fill jug1
+            (x, jug2),              # Fill jug2
+            (0, y),                 # Empty jug1
+            (x, 0),                 # Empty jug2
+
+            # Pour jug1 -> jug2
+            (x - min(x, jug2 - y), y + min(x, jug2 - y)),
+
+            # Pour jug2 -> jug1
+            (x + min(y, jug1 - x), y - min(y, jug1 - x))
+        ]
+
+        for state in states:
+            if state not in visited:
+                visited.add(state)
+                queue.append(state)
+
+    print("No solution found")
+
+# -------- MAIN --------
+water_jug()
